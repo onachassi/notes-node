@@ -1,5 +1,3 @@
-console.log("Starting notes.js")
-
 const fs = require('fs');
 
 var fetchNotes = () => {
@@ -33,15 +31,32 @@ var addNote = (title, body) => {
 };
 
 var getAll = () => {
-	console.log('Getting all notes');
+	var notes = fetchNotes()
+	console.log('Notes')
+	console.log('-----')
+	notes.forEach((note) => console.log(`Title: ${note.title}`))
 }
 
 var getNote = (title) => {
-	console.log('Getting note', title)
+	var notes = fetchNotes()
+	note = notes.filter((note) => note.title === title)
+	if (note.length > 0){
+		console.log(`Title: ${note[0].title}`)
+		console.log(`Body: ${note[0].body}`)
+	} else {
+		console.log(`Could not find note: ${title}`)
+	}
 }
 
 var removeNote = (title) => {
-	console.log('Removing note', title)
+	var notes = fetchNotes()
+	var newNotes = notes.filter((note) => note.title !== title)
+	if (newNotes.length < notes.length) {
+		console.log(`Successfully deleted ${title}`)
+		saveNotes(newNotes)
+	} else {
+		console.log(`Could not find ${title}`)
+	}
 }
 
 
